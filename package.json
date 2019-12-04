@@ -1,0 +1,11 @@
+{
+  "name": "ec2-dash-service",
+  "version": "1.0.0",
+  "description": "EC2 Status Dashboard Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
