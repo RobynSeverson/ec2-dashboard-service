@@ -36,6 +36,36 @@ exports.handler = (event, context, callback) => {
                 page
             });
             break;
+
+            case 'POST':
+                const filters = event.body ? JSON.parse(event.body) : null;
+
+                const filteredResults = !filters ? sampleData : sampleData.filter((instance) => {
+                    let include = true;
+
+                    Object.keys(filters).forEach((filterKey) => {
+                        if (include) {
+                            let instVal = instance[filterKey].toLocaleLowerCase();
+                            let filterVal = filters[filterKey].toLocaleLowerCase();
+                            if (!instVal.includes(filterVal)) {
+                                include = false;
+                            }
+                        }
+                    });
+
+                    return include;
+
+                });
+
+                let page = filteredResults.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
+
+                done(null, {
+                    pageIndex,
+                    pageSize,
+                    total,
+                    page
+                });
+                break;
         default:
             done(new Error(`Unsupported method "${event.httpMethod}"`));
     }
